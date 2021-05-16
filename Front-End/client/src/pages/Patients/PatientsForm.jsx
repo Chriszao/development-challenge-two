@@ -45,6 +45,18 @@ export default function PatientsForm() {
             value={values.email}
             onChange={handleInputChange}
           />
+          <Controls.Input
+            name="mobile"
+            label="Telefone"
+            value={values.mobile}
+            onChange={handleInputChange}
+          />
+          <Controls.Input
+            name="city"
+            label="Cidade"
+            value={values.city}
+            onChange={handleInputChange}
+          />
         </Grid>
         <Grid item xs={6}>
           <Controls.RadioGroup
@@ -61,6 +73,22 @@ export default function PatientsForm() {
             onChange={handleInputChange}
             options={PatientsService.getAppointmentCollection()}
           />
+          <Controls.DatePicker
+            name="appointmentDate"
+            label="Data da consulta"
+            value={values.appointmentDate}
+            onChange={handleInputChange}
+          />
+          <Controls.CheckBox
+            name="isOnline"
+            label="Deseja realizar a consulta online ?"
+            value={values.isOnline}
+            onChange={handleInputChange}
+          />
+          <div>
+            <Controls.Button type="submit" text="Cadastrar" />
+            <Controls.Button color="secondary" text="Limpar" />
+          </div>
         </Grid>
       </Grid>
     </Form>

@@ -35,6 +35,8 @@
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": "error",
     "import/prefer-default-export": "off",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "no-shadow": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }
