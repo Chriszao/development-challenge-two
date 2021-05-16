@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-const useStyle = makeStyles({
+const useStyles = makeStyles({
   sideMenu: {
     display: 'flex',
     flexDirection: 'column',
@@ -12,4 +12,4 @@ const useStyle = makeStyles({
   },
 });
 
-export default useStyle;
+export default useStyles;

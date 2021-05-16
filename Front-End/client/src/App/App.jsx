@@ -1,25 +1,23 @@
-import { CssBaseline, makeStyles } from '@material-ui/core';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import Header from '../components/Header/Header';
 import SideMenu from '../components/SideMenu/SideMenu';
+import Patients from '../pages/Patients/Patients';
 import '../styles/global.css';
-
-const useStyles = makeStyles({
-  appMain: {
-    paddingLeft: '320px',
-    width: '100%',
-  },
-});
+import useStyles from './AppStyle';
+import theme from './AppTheme';
 
 function App() {
   const classes = useStyles();
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <SideMenu />
       <div className={classes.appMain}>
         <Header />
+
+        <Patients />
       </div>
       <CssBaseline />
-    </>
+    </ThemeProvider>
   );
 }
 

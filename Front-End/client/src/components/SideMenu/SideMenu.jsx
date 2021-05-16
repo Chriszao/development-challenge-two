@@ -1,8 +1,8 @@
 import React from 'react';
-import useStyle from './SideMenu';
+import useStyles from './SideMenuStyle';
 
 const SideMenu = () => {
-  const classes = useStyle();
+  const classes = useStyles();
   return <div className={classes.sideMenu} />;
 };
 

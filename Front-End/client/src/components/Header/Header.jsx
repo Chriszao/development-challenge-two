@@ -14,7 +14,7 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import SearchIcon from '@material-ui/icons/Search';
 
-import useStyles from './Header';
+import useStyles from './HeaderStyle';
 
 export default function Header() {
   const classes = useStyles();
