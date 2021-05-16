@@ -8,6 +8,7 @@ export function UseForm(initialFieldValues) {
 
   const handleInputChange = e => {
     const { name, value } = e.target;
+
     setValues({
       ...values,
       [name]: value,
@@ -21,10 +22,12 @@ export function UseForm(initialFieldValues) {
   };
 }
 
-export function Form({ children }) {
+export function Form(props) {
+  const { children } = props;
+
   const classes = useStyles();
 
   return <form className={classes.root}>{children}</form>;
 }
 
-Form.propTypes = { children: PropTypes.node.isRequired };
+Form.propTypes = { children: PropTypes.element.isRequired };

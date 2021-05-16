@@ -1,13 +1,18 @@
-import {
-  FormControlLabel,
-  FormLabel,
-  Grid,
-  Radio,
-  RadioGroup,
-  TextField,
-} from '@material-ui/core';
 import React from 'react';
+
+import { Grid } from '@material-ui/core';
+
 import { UseForm, Form } from '../../components/UseForm/UseForm';
+
+import Controls from '../../components/controls/Controls';
+
+import * as PatientsService from '../../Services/PatientService';
+
+const genderItems = [
+  { id: 'male', title: 'Masculino' },
+  { id: 'female', title: 'Feminino' },
+  { id: 'other', title: 'Outro' },
+];
 
 const initialFieldValues = {
   id: 0,
@@ -22,58 +27,40 @@ const initialFieldValues = {
 };
 
 export default function PatientsForm() {
-  const { values, setValues, handleInputChange } = UseForm(initialFieldValues);
+  const { values, handleInputChange } = UseForm(initialFieldValues);
 
   return (
     <Form>
       <Grid container>
         <Grid item xs={6}>
-          <TextField
-            variant="outlined"
-            label="Nome Completo"
+          <Controls.Input
             name="fullName"
+            label="Nome Completo"
             value={values.fullName}
             onChange={handleInputChange}
           />
-          <TextField
-            variant="outlined"
-            label="Email"
+          <Controls.Input
             name="email"
+            label="Email"
             value={values.email}
+            onChange={handleInputChange}
           />
-          {/* <TextField
-            variant="outlined"
-            label="Celular"
-            name="mobile"
-            value={values.mobile}
-          /> */}
         </Grid>
         <Grid item xs={6}>
-          <Form>
-            <FormLabel>Gênero</FormLabel>
-            <RadioGroup
-              row
-              name="gender"
-              value={values.gender}
-              onChange={handleInputChange}
-            >
-              <FormControlLabel
-                value="male"
-                control={<Radio />}
-                label="Masculino"
-              />
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="Feminino"
-              />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label="Outro"
-              />
-            </RadioGroup>
-          </Form>
+          <Controls.RadioGroup
+            name="gender"
+            label="Gênero"
+            value={values.gender}
+            onChange={handleInputChange}
+            items={genderItems}
+          />
+          <Controls.Select
+            name="appointmentId"
+            label="Especialidade"
+            value={values.appointmentId}
+            onChange={handleInputChange}
+            options={PatientsService.getAppointmentCollection()}
+          />
         </Grid>
       </Grid>
     </Form>
