@@ -1,0 +1,85 @@
+service: sls
+frameworkVersion: '2'
+
+custom:
+  settings:
+    PATIENTS_TABLE: patients
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: sa-east-1
+  environment: ${self:custom.settings}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+      - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.PATIENTS_TABLE}"
+  lambdaHashingVersion: 20201221
+
+functions:
+  createPatient:
+    handler: handler.createPatient
+    events:
+    - http:
+        path: /patient
+        method: post
+        cors: true
+  getAllPatients:
+    handler: handler.getAllPatients
+    events:
+    - http:
+        path: /patients
+        method: get
+        cors: true
+  getPatients:
+    handler: handler.getPatients
+    events:
+    - http:
+        path: /patients/{number}
+        method: get
+        cors: true
+  getPatient:
+    handler: handler.getPatient
+    events:
+    - http:
+        path: /patient/{id}
+        method: get
+        cors: true
+  updatePatient:
+    handler: handler.updatePatient
+    events:
+    - http:
+        path: /patient/{id}
+        method: put
+        cors: true
+  deletePatient:
+    handler: handler.deletePatient
+    events:
+    - http:
+        path: /patient/{id}
+        method: delete
+        cors: true
+
+resources:
+  Resources:
+    PatientsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+        - AttributeName: "id"
+          AttributeType: "S"
+        KeySchema:
+        - AttributeName: "id"
+          KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.settings.PATIENTS_TABLE}
+
