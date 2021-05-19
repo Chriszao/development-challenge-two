@@ -17,12 +17,9 @@
   },
   "plugins": [
     "react",
-    "react-hooks",
     "prettier"
   ],
   "rules": {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
     "react/jsx-filename-extension": [
       1,
       {
@@ -37,6 +34,7 @@
     "import/prefer-default-export": "off",
     "no-unused-vars": "warn",
     "no-shadow": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "consistent-return": "off"
   }
 }

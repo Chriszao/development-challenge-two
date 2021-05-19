@@ -5,6 +5,9 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(5),
     padding: theme.spacing(3),
   },
+  searchInput: {
+    width: '75%',
+  },
 }));
 
 export default useStyles;

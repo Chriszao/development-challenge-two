@@ -14,4 +14,4 @@ const Controls = {
   Button,
 };
 
-export default Controls;
+export { Controls };

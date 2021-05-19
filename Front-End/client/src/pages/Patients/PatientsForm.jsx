@@ -4,9 +4,11 @@ import { Grid } from '@material-ui/core';
 
 import { UseForm, Form } from '../../components/UseForm/UseForm';
 
-import Controls from '../../components/controls/Controls';
+import { Controls } from '../../components/controls/Controls';
 
-import * as PatientsService from '../../Services/PatientService';
+import { getAppointmentCollection } from '../../Services/PatientService';
+
+import { createPatient } from '../../Services/CreatePatient';
 
 const genderItems = [
   { id: 'male', title: 'Masculino' },
@@ -15,7 +17,7 @@ const genderItems = [
 ];
 
 const initialFieldValues = {
-  id: 0,
+  patientId: 0,
   fullName: '',
   email: '',
   mobile: '',
@@ -27,10 +29,62 @@ const initialFieldValues = {
 };
 
 export default function PatientsForm() {
-  const { values, handleInputChange } = UseForm(initialFieldValues);
+  const validate = (fieldValues = values) => {
+    const temp = { ...errors };
+    if ('fullName' in fieldValues) {
+      temp.fullName = fieldValues.fullName
+        ? ''
+        : 'O preenchimento deste campo é obrigatório.';
+    }
+
+    if ('email' in fieldValues) {
+      temp.email = /$^|.+@.+..+/.test(fieldValues.email)
+        ? ''
+        : 'O Email não é valido';
+    }
+
+    if ('mobile' in fieldValues) {
+      temp.mobile =
+        fieldValues.mobile.length > 9
+          ? ''
+          : 'O campo deve ser preenchido com no mínimo 10 números. Ex: xxxxxxxxx';
+    }
+
+    if ('appointmentId' in fieldValues) {
+      temp.appointmentId =
+        fieldValues.appointmentId.length !== 0
+          ? ''
+          : 'O preenchimento deste campo é obrigatório.';
+    }
+
+    if ('city' in fieldValues) {
+      temp.city = fieldValues.city
+        ? ''
+        : 'O preenchimento deste campo é obrigatório.';
+    }
+
+    setErrors({
+      ...temp,
+    });
+
+    if (fieldValues === values) {
+      return Object.values(temp).every(x => x === '');
+    }
+  };
+
+  const { values, setValues, errors, setErrors, handleInputChange, resetForm } =
+    UseForm(initialFieldValues, true, validate);
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    if (validate()) {
+      createPatient(values);
+      resetForm();
+    }
+  };
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Grid container>
         <Grid item xs={6}>
           <Controls.Input
@@ -38,24 +92,28 @@ export default function PatientsForm() {
             label="Nome Completo"
             value={values.fullName}
             onChange={handleInputChange}
+            error={errors.fullName}
           />
           <Controls.Input
             name="email"
             label="Email"
             value={values.email}
             onChange={handleInputChange}
+            error={errors.email}
           />
           <Controls.Input
             name="mobile"
             label="Telefone"
             value={values.mobile}
             onChange={handleInputChange}
+            error={errors.mobile}
           />
           <Controls.Input
             name="city"
             label="Cidade"
             value={values.city}
             onChange={handleInputChange}
+            error={errors.city}
           />
         </Grid>
         <Grid item xs={6}>
@@ -71,7 +129,8 @@ export default function PatientsForm() {
             label="Especialidade"
             value={values.appointmentId}
             onChange={handleInputChange}
-            options={PatientsService.getAppointmentCollection()}
+            options={getAppointmentCollection()}
+            error={errors.appointmentId}
           />
           <Controls.DatePicker
             name="appointmentDate"
@@ -87,7 +146,11 @@ export default function PatientsForm() {
           />
           <div>
             <Controls.Button type="submit" text="Cadastrar" />
-            <Controls.Button color="secondary" text="Limpar" />
+            <Controls.Button
+              onClick={resetForm}
+              color="secondary"
+              text="Limpar"
+            />
           </div>
         </Grid>
       </Grid>
