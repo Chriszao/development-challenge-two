@@ -35,13 +35,13 @@ export default function useTable(records, headCells, filterFunction) {
     <Table className={classes.table}>{children}</Table>
   );
 
-  const handleSortRequest = cellId => {
-    const isAsc = orderBy === cellId && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(cellId);
-  };
-
   const TableHead = () => {
+    const handleSortRequest = cellId => {
+      const isAsc = orderBy === cellId && order === 'asc';
+      setOrder(isAsc ? 'desc' : 'asc');
+      setOrderBy(cellId);
+    };
+
     return (
       <MuiTableHead>
         <TableRow>
@@ -74,7 +74,7 @@ export default function useTable(records, headCells, filterFunction) {
     children: PropTypes.element.isRequired,
   };
 
-  const handleChangePage = newPage => {
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 

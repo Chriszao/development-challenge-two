@@ -41,26 +41,31 @@ const headCells = [
 
 export default function Patients() {
   const classes = useStyles();
+
+  const [dataForEdit, setDataForEdit] = useState(null);
+
   const { data } = useFetch(
     'https://vu11j8c4kh.execute-api.sa-east-1.amazonaws.com/dev/patients',
   );
-  const [dataForEdit, setDataForEdit] = useState(null);
-  const [openPopup, setOpenPopup] = useState(false);
-  const [confirmDialog, setConfirmDialog] = useState({
-    isOpen: false,
-    title: '',
-    subTitle: '',
+
+  const [filterFunction, setFilterFunction] = useState({
+    function: items => {
+      return items;
+    },
   });
+
+  const [openPopup, setOpenPopup] = useState(false);
+
   const [notify, setNotify] = useState({
     isOpen: false,
     message: '',
     type: '',
   });
 
-  const [filterFunction, setFilterFunction] = useState({
-    function: items => {
-      return items;
-    },
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    title: '',
+    subTitle: '',
   });
 
   const {
@@ -104,7 +109,7 @@ export default function Patients() {
   }
 
   const addOrEdit = (patient, resetForm) => {
-    if (patient.id === '') {
+    if (!patient.id) {
       createPatient(patient);
       setNotify({
         isOpen: true,
