@@ -8,6 +8,10 @@ const useStyles = makeStyles(theme => ({
   searchInput: {
     width: '75%',
   },
+  newButton: {
+    position: 'absolute',
+    right: '10px',
+  },
 }));
 
 export default useStyles;

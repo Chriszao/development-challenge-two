@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 
 import { useStyles } from './useTableStyle';
-import { getAppointmentCollection } from '../../Services/PatientService';
+import { getAppointmentCollection } from '../../utils/PatientService';
 
 function parseData(data) {
   const appointments = getAppointmentCollection();
@@ -41,7 +41,7 @@ export default function useTable(records, headCells, filterFunction) {
     setOrderBy(cellId);
   };
 
-  const TableHead = props => {
+  const TableHead = () => {
     return (
       <MuiTableHead>
         <TableRow>
@@ -74,7 +74,7 @@ export default function useTable(records, headCells, filterFunction) {
     children: PropTypes.element.isRequired,
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = newPage => {
     setPage(newPage);
   };
 

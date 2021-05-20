@@ -1,4 +1,4 @@
-import api from './api';
+import api from '../Services/api';
 
 async function createPatient(values) {
   const data = {
@@ -12,15 +12,7 @@ async function createPatient(values) {
     isOnline: values.isOnline,
   };
 
-  const response = await api.post('/patient', data);
-  try {
-    if (response.status === 200) {
-      alert('Usuário cadastrado!');
-    }
-  } catch (error) {
-    alert('Erro ao cadastrar');
-    console.log(error);
-  }
+  await api.post('/patient', data);
 }
 
 export { createPatient };

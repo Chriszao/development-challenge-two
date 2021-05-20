@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import PropTypes from 'prop-types';
 
 import { Grid } from '@material-ui/core';
 
@@ -6,9 +8,7 @@ import { UseForm, Form } from '../../components/UseForm/UseForm';
 
 import { Controls } from '../../components/controls/Controls';
 
-import { getAppointmentCollection } from '../../Services/PatientService';
-
-import { createPatient } from '../../Services/CreatePatient';
+import { getAppointmentCollection } from '../../utils/PatientService';
 
 const genderItems = [
   { id: 'male', title: 'Masculino' },
@@ -28,7 +28,14 @@ const initialFieldValues = {
   isOnline: false,
 };
 
-export default function PatientsForm() {
+export default function PatientsForm(props) {
+  const { addOrEdit, dataForEdit } = props;
+
+  PatientsForm.propTypes = {
+    addOrEdit: PropTypes.func.isRequired,
+    dataForEdit: PropTypes.func.isRequired,
+  };
+
   const validate = (fieldValues = values) => {
     const temp = { ...errors };
     if ('fullName' in fieldValues) {
@@ -78,10 +85,17 @@ export default function PatientsForm() {
   const handleSubmit = async e => {
     e.preventDefault();
     if (validate()) {
-      createPatient(values);
-      resetForm();
+      addOrEdit(values, resetForm);
     }
   };
+
+  useEffect(() => {
+    if (dataForEdit != null) {
+      setValues({
+        ...dataForEdit,
+      });
+    }
+  }, [dataForEdit]);
 
   return (
     <Form onSubmit={handleSubmit}>
