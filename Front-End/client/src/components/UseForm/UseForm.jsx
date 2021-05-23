@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import useStyles from './UseFormStyle';
@@ -39,9 +39,10 @@ export function UseForm(
 }
 
 export function Form(props) {
+  const classes = useStyles();
   const { children, ...rest } = props;
 
-  const classes = useStyles();
+  Form.propTypes = { children: PropTypes.element.isRequired };
 
   return (
     <form className={classes.root} {...rest}>
@@ -49,5 +50,3 @@ export function Form(props) {
     </form>
   );
 }
-
-Form.propTypes = { children: PropTypes.element.isRequired };

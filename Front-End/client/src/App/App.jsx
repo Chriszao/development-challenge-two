@@ -1,9 +1,10 @@
+import React from 'react';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
-import Header from '../components/Header/Header';
 import SideMenu from '../components/SideMenu/SideMenu';
+import useStyles from './AppStyle';
+import Header from '../components/Header/Header';
 import Patients from '../pages/Patients/Patients';
 import '../styles/global.css';
-import useStyles from './AppStyle';
 import theme from './AppTheme';
 
 function App() {

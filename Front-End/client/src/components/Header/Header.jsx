@@ -36,13 +36,11 @@ export default function Header() {
                 <NotificationsNoneIcon fontSize="small" />
               </Badge>
             </IconButton>
-
             <IconButton>
-              <Badge badgeContent={6} color="primary">
+              <Badge badgeContent={3} color="primary">
                 <ChatBubbleOutlineIcon fontSize="small" />
               </Badge>
             </IconButton>
-
             <IconButton>
               <PowerSettingsNewIcon fontSize="small" />
             </IconButton>

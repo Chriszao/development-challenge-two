@@ -21,6 +21,11 @@ const theme = createMuiTheme({
       },
     },
   },
+  props: {
+    MuiIconButton: {
+      disableRipple: true,
+    },
+  },
 });
 
 export default theme;
